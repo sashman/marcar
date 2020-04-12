@@ -9,7 +9,8 @@
     "format": "npx prettier --write './**/*.{ts,md}'",
     "dev": "nexus dev",
     "build": "nexus build",
-    "start": "node node_modules/.build"
+    "start": "node node_modules/.build",
+    "seed": "ts-node prisma/seed.ts"
   },
   "prettier": {
     "semi": false,

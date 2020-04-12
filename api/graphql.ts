@@ -1,40 +1,39 @@
-import { schema } from "nexus"
-      
+import { schema } from 'nexus'
+
 schema.objectType({
-  name: "World",
+  name: 'User',
   definition(t) {
     t.model.id()
     t.model.name()
-    t.model.population()
-  }
+    t.model.email()
+  },
 })
-      
+
 schema.queryType({
   definition(t) {
-    t.field("hello", {
-      type: "World",
+    t.field('user', {
+      type: 'User',
       args: {
-        world: schema.stringArg({ required: false })
+        email: schema.stringArg({ required: false }),
       },
       async resolve(_root, args, ctx) {
-        const worldToFindByName = args.world ?? 'Earth'
-        const world = await ctx.db.world.findOne({
+        const user = await ctx.db.user.findOne({
           where: {
-            name: worldToFindByName
-          }
+            email: args.email,
+          },
         })
-      
-        if (!world) throw new Error(`No such world named "${args.world}"`)
-      
-        return world
-      }
+
+        if (!user) throw new Error(`No such user named "${args.user}"`)
+
+        return user
+      },
     })
-  
-    t.list.field('worlds', {
-      type: 'World',
-      resolve(_root, _args, ctx) { 
-        return ctx.db.world.findMany()
-      }
+
+    t.list.field('users', {
+      type: 'User',
+      resolve(_root, _args, ctx) {
+        return ctx.db.user.findMany()
+      },
     })
-  }
+  },
 })
