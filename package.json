@@ -10,6 +10,7 @@
     "dev": "nexus dev",
     "build": "nexus build",
     "start": "node node_modules/.build",
+    "migrate:up": "prisma migrate up --experimental",
     "seed": "ts-node prisma/seed.ts"
   },
   "prettier": {
