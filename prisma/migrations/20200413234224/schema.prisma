@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator prisma_client {
@@ -11,8 +11,8 @@ model User {
   id    Int    @default(autoincrement()) @id
   name  String
   email String @unique
-  match Match? @relation(references: [id], fields: [matchId])
-  matchId Int?
+  // ownerOfId Int[]
+  // ownerOf Match[] @relation(fields: [ownerOfId], name: "ownerOf")
 }
 
 model Match {

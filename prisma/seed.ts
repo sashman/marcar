@@ -6,21 +6,26 @@ main()
 
 async function main() {
   await db.user.deleteMany({})
+  await db.match.deleteMany({})
+
+  const users = new Array(5).fill(0).map((_, i) => ( {
+    name: `User ${i}`,
+    email: `user${i}@test.com`,
+  }))
 
   const results = await Promise.all(
-    [
-      {
-        name: 'User 1',
-        email: 'user1@test.com',
-      },
-      {
-        name: 'User 2',
-        email: 'user2@test.com',
-      },
-    ].map((data) => db.user.create({ data })),
-  )
+    users.map((data) => db.user.create({ data })),
+    )
 
-  console.log('Seeded: %j', results)
+  const matchUpdated = await db.match.create({
+    data: {
+      players: {
+        connect: results.map(result => ({ id: result.id }))
+      }
+    }
+  })
+
+  console.log('Seeded: %j', { results, matchUpdated })
 
   db.disconnect()
 }
