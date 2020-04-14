@@ -5,27 +5,41 @@ const db = new PrismaClient()
 main()
 
 async function main() {
+  console.log('Deleting users')
+
   await db.user.deleteMany({})
+
+  console.log('Deleting matches')
   await db.match.deleteMany({})
 
-  const users = new Array(5).fill(0).map((_, i) => ( {
+  console.log('Deleting participants')
+  await db.participant.deleteMany({})
+
+  console.log('Creating users')
+  const userData = new Array(5).fill(0).map((_, i) => ({
     name: `User ${i}`,
     email: `user${i}@test.com`,
   }))
 
-  const results = await Promise.all(
-    users.map((data) => db.user.create({ data })),
-    )
+  const users = await Promise.all(
+    userData.map((data) => db.user.create({ data })),
+  )
 
-  const matchUpdated = await db.match.create({
+  console.log('Creating match')
+  const match = await db.match.create({
     data: {
-      players: {
-        connect: results.map(result => ({ id: result.id }))
-      }
-    }
+      participants: {
+        create: {
+          participant: {
+            connect: { id: users[0].id },
+          },
+        },
+      },
+    },
   })
+  // connect: results.map(result => ({ id: result.id }))
 
-  console.log('Seeded: %j', { results, matchUpdated })
+  console.log('Seeded: %j', { users, match })
 
   db.disconnect()
 }
