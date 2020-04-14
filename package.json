@@ -10,7 +10,7 @@
     "dev": "nexus dev",
     "build": "nexus build",
     "start": "node node_modules/.build",
-    "migrate:up": "prisma migrate up --experimental",
+    "migrate:up": "prisma migrate up --experimental && prisma generate",
     "migrate:save": "prisma migrate save --experimental",
     "seed": "ts-node prisma/seed.ts"
   },
