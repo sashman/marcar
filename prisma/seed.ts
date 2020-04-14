@@ -29,11 +29,9 @@ async function main() {
   const match = await db.match.create({
     data: {
       participants: {
-        create: {
-          participant: {
-            connect: { id: users[0].id },
-          },
-        },
+        create: users.map((user) => ({
+          participant: { connect: { id: user.id } },
+        })),
       },
     },
   })
