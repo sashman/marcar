@@ -20,7 +20,7 @@
     "trailingComma": "all"
   },
   "devDependencies": {
-    "@prisma/cli": "^2.0.0-beta.2",
+    "@prisma/cli": "^2.0.0-beta.1",
     "@types/node": "^13.11.1",
     "prettier": "^2.0.4",
     "ts-node": "^8.8.2",
