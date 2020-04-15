@@ -42,20 +42,7 @@ async function main() {
     },
   })
 
-  const participant = await db.participant.create({
-    data: {
-      match: {
-        connect: {
-          id: match.id,
-        },
-      },
-      user: {
-        connect: {
-          id: users[0].id,
-        },
-      },
-    },
-  })
+  console.log('Creating participants')
 
   const participants = await Promise.all(
     users.map((user) =>
@@ -76,19 +63,7 @@ async function main() {
     ),
   )
 
-  // console.log('Creating match')
-  // const match = await db.match.create({
-  //   data: {
-  //     participants: {
-  //       create: users.map((user) => ({
-  //         participant: { connect: { id: user.id } },
-  //       })),
-  //     },
-  //   },
-  // })
-  // connect: results.map(result => ({ id: result.id }))
-
-  console.log('Seeded: %j', { users, match, participant })
+  console.log('Seeded: %j', { users, match, participants })
 
   db.disconnect()
 }
