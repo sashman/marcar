@@ -14,7 +14,7 @@ schema.queryType({
           },
         })
 
-        if (!user) throw new Error(`No such user named "${args.user}"`)
+        if (!user) throw new Error(`No such user email "${args.email}"`)
 
         return user
       },
