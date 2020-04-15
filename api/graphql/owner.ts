@@ -1,11 +1,10 @@
 import { schema } from 'nexus'
 
 schema.objectType({
-  name: 'Match',
+  name: 'Owner',
   definition(t) {
     t.model.id()
-    t.model.participants()
-    t.model.owner()
-    t.model.scheduledAt()
+    t.model.user()
+    t.model.match()
   },
 })
