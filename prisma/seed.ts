@@ -4,6 +4,14 @@ const db = new PrismaClient()
 
 main()
 
+function tomorrow() {
+  const today = new Date()
+  const tomorrow = new Date(today)
+  tomorrow.setDate(tomorrow.getDate() + 1)
+
+  return tomorrow
+}
+
 async function main() {
   console.log('Deleting participants')
   await db.participant.deleteMany({})
@@ -28,8 +36,10 @@ async function main() {
   )
 
   console.log('Creating match')
+
   const match = await db.match.create({
     data: {
+      scheduledAt: tomorrow(),
       owner: {
         create: {
           user: {
