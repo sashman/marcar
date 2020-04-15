@@ -8,14 +8,14 @@ async function main() {
   console.log('Deleting participants')
   await db.participant.deleteMany({})
 
-  console.log('Deleting users')
-  await db.user.deleteMany({})
-
   console.log('Deleting matches')
   await db.match.deleteMany({})
 
-  console.log('Creating match')
-  const match = await db.match.create({ data: {} })
+  console.log('Deleting owners')
+  await db.owner.deleteMany({})
+
+  console.log('Deleting users')
+  await db.user.deleteMany({})
 
   console.log('Creating users')
   const userData = new Array(5).fill(0).map((_, i) => ({
@@ -26,6 +26,21 @@ async function main() {
   const users = await Promise.all(
     userData.map((data) => db.user.create({ data })),
   )
+
+  console.log('Creating match')
+  const match = await db.match.create({
+    data: {
+      owner: {
+        create: {
+          user: {
+            connect: {
+              id: users[0].id,
+            },
+          },
+        },
+      },
+    },
+  })
 
   const participant = await db.participant.create({
     data: {
