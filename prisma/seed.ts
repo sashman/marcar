@@ -25,8 +25,11 @@ async function main() {
   console.log('Deleting users')
   await db.user.deleteMany({})
 
+  console.log('Deleting teams')
+  await db.team.deleteMany({})
+
   console.log('Creating users')
-  const userData = new Array(5).fill(0).map((_, i) => ({
+  const userData = new Array(10).fill(0).map((_, i) => ({
     name: `User ${i}`,
     email: `user${i}@test.com`,
   }))
@@ -40,6 +43,14 @@ async function main() {
   const match = await db.match.create({
     data: {
       scheduledAt: tomorrow(),
+      teams: {
+        create: [
+          {
+            name: 'Blue',
+          },
+          { name: 'Red' },
+        ],
+      },
       owner: {
         create: {
           user: {
@@ -66,6 +77,14 @@ async function main() {
           user: {
             connect: {
               id: user.id,
+            },
+          },
+          team: {
+            connect: {
+              matchId_name: {
+                matchId: match.id,
+                name: user.id % 2 === 0 ? 'Red' : 'Blue',
+              },
             },
           },
         },
