@@ -1,12 +1,11 @@
 import { schema } from 'nexus'
 
 schema.objectType({
-  name: 'Match',
+  name: 'Team',
   definition(t) {
     t.model.id()
+    t.model.name()
     t.model.participants()
-    t.model.teams()
-    t.model.owner()
-    t.model.scheduledAt()
+    t.model.match()
   },
 })

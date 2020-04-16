@@ -6,5 +6,6 @@ schema.objectType({
     t.model.id()
     t.model.user()
     t.model.match()
+    t.model.team()
   },
 })
