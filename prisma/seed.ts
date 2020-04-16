@@ -1,4 +1,7 @@
 import { PrismaClient } from '@prisma/client'
+var faker = require('faker')
+faker.locale = 'es'
+//  faker = require('faker');
 
 const db = new PrismaClient()
 
@@ -30,7 +33,8 @@ async function main() {
 
   console.log('Creating users')
   const userData = new Array(10).fill(0).map((_, i) => ({
-    name: `User ${i}`,
+    // name: `User ${i}`,
+    name: faker.name.findName(),
     email: `user${i}@test.com`,
   }))
 

@@ -2,6 +2,7 @@
   "name": "marcar",
   "license": "UNLICENSED",
   "dependencies": {
+    "faker": "^4.1.0",
     "nexus": "^0.20.0-next.41",
     "nexus-plugin-prisma": "^0.7.0"
   },
